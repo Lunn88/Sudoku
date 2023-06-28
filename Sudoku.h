@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <vector>
 
 #define UNASSIGNED 0
 
@@ -9,14 +8,19 @@ using namespace std;
 class Sudoku
 {
 private:
-	vector<vector<int>> grid;
-	int solvedGrid[9][9];
+	int grid[9][9];
+	int solnGrid[9][9];
+	int guessNum[9];
+	int gridPos[81];
 	int difficulty;
 
 public:
 	Sudoku();
-	pair<int, int> FindUnassignedLocation(int grid[9][9]);
+	pair<int, int> FindUnassignedLocation();
 	bool IsSafe(int row, int col, int num);
 	void create();
 	void printGrid();
+	bool solveGrid();
+	void countSln(int& number);
+	void genPuzzle();
 };

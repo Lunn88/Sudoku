@@ -1,9 +1,35 @@
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "Sudoku.h"
+
+int genRandNum(int maxLimit)
+{
+	return rand() % maxLimit;
+}
 
 Sudoku::Sudoku()
 {
+	for (int i = 0; i < 81; i++)
+	{
+		this->gridPos[i] = i;
+	}
+
+	random_shuffle(this->gridPos, (this->gridPos) + 81, genRandNum);
+
+	for (int i = 0; i < 9; i++)
+	{
+		this->guessNum[i] = i + 1;
+	}
+
+	random_shuffle(this->guessNum, (this->guessNum) + 9, genRandNum);
+
 	srand(time(0));
-	this->grid.resize(9, vector<int>(9));
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
@@ -13,13 +39,13 @@ Sudoku::Sudoku()
 	}
 }
 
-pair<int, int> Sudoku::FindUnassignedLocation(int grid[9][9])
+pair<int, int> Sudoku::FindUnassignedLocation()
 {
 	for (int row = 0; row < 9; row++)
 	{
 		for (int col = 0; col < 9; col++)
 		{
-			if (grid[row][col] == UNASSIGNED)
+			if (this->grid[row][col] == UNASSIGNED)
 				return { row, col };
 		}
 	}
@@ -54,37 +80,99 @@ bool Sudoku::IsSafe(int row, int col, int num)
 	return true;
 }
 
-
-void swapCol(int m, int n, vector<vector<int>>& grid)
-{
-	vector<int>temp(grid.size(), UNASSIGNED);
-	for (int i = 0; i < grid.size(); i++)
-	{
-		temp[i] = grid[i][m];
-		grid[i][m] = grid[i][n];
-		grid[i][n] = temp[i];
-	}
-}
-
 void Sudoku::create()
 {
+	//填入对角线的粗线宫
+	for (int idx = 0; idx < 3; idx++) {
+		int start = idx * 3;
+		random_shuffle(this->guessNum, (this->guessNum) + 9, genRandNum);
+		for (int i = 0; i < 3; ++i)
+		{
+			for (int j = 0; j < 3; ++j)
+			{
+				this->grid[start + i][start + j] = guessNum[i * 3 + j];
+			}
+		}
+	}
+
+	this->solveGrid();//补全
+
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			int n = rand() % 9 + 1;
-			while (this->IsSafe(i, j, n) != true)
-				n = rand() % 9 + 1;
-			this->grid[i][j] = n;
+			this->solnGrid[i][j] = this->grid[i][j];
+		}
+	}
+}
+
+bool Sudoku::solveGrid()
+{
+	pair<int, int> pos = this->FindUnassignedLocation();
+	int row = pos.first;
+	int col = pos.second;
+	if (row == -1 && col == -1)
+		return true;
+
+
+	for (int num = 0; num < 9; num++)
+	{
+		// 尝试填入空缺的值
+		if (this->IsSafe(row, col, this->guessNum[num]))
+		{
+			// 填入
+			this->grid[row][col] = this->guessNum[num];
+
+			// 判断填入后是否正确
+			if (solveGrid())
+				return true;
+
+			// 不正确则不填入
+			this->grid[row][col] = UNASSIGNED;
 		}
 	}
 
-	int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-	for (int j = 0; j < 3; j++)
+	return false;
+}
+
+void Sudoku::countSln(int& number)
+{
+	pair<int, int> pos = this->FindUnassignedLocation();
+	int row = pos.first;
+	int col = pos.second;
+	if (row == -1 && col == -1) {
+		number++;
+		return;
+	}
+
+	for (int i = 0; i < 9 && number < 2; i++)
 	{
-		int i = rand() % 9;
-		grid[choice[i][0]].swap(grid[choice[i][1]]);
-		swapCol(choice[i][0], choice[i][1], grid);
+		if (this->IsSafe(row, col, this->guessNum[i]))
+		{
+			this->grid[row][col] = this->guessNum[i];
+			countSln(number);
+		}
+
+		this->grid[row][col] = UNASSIGNED;
+	}
+}
+
+void Sudoku::genPuzzle()
+{
+	for (int i = 0; i < 81; i++)
+	{
+		int x = (this->gridPos[i]) / 9;
+		int y = (this->gridPos[i]) % 9;
+		int temp = this->grid[x][y];
+		this->grid[x][y] = UNASSIGNED;
+
+		// 限制唯一解
+		int check = 0;
+		countSln(check);
+		if (check != 1)
+		{
+			this->grid[x][y] = temp;
+		}
 	}
 }
 
