@@ -188,7 +188,7 @@ void Sudoku::printSolution()
 		{
 			if (j % 3 == 0)
 				fprintf(fp, "|");
-			fprintf(fp, "%d", 7);
+			fprintf(fp, "%d", this->grid[i][j]);
 			if (j % 3 != 2)
 				fprintf(fp, " ");
 		}
@@ -205,7 +205,10 @@ void Sudoku::printPuzzle()
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			fprintf(fp, "%d", 7);
+			if(this->grid[i][j] == 0)
+				fprintf(fp, "$");
+			else
+				fprintf(fp, "%d", this->grid[i][j]);
 			if (j != 8)
 				fprintf(fp, " ");
 		}
@@ -227,8 +230,13 @@ void Sudoku::readPuzzle()
 			c = infile.get();
 			if (c != ' ' && c != '\n')
 			{
-				int tmp = c - '0';
-				this->grid[i][j] = tmp;
+				if (c == '$')
+				{
+					int tmp = c - '0';
+					this->grid[i][j] = tmp;
+				}
+				else
+					this->grid[i][j] = 0;
 				j++;
 			}
 		}
