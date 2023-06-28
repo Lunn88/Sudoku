@@ -176,20 +176,61 @@ void Sudoku::genPuzzle()
 	}
 }
 
-void Sudoku::printGrid()
+void Sudoku::printSolution()
 {
+	FILE* fp = NULL;
+	fp = fopen("./sudoku.txt", "w+");
 	for (int i = 0; i < 9; i++)
 	{
-		if(i % 3 == 0 && i != 0)
-			cout << "-------------------" << endl;
+		if (i % 3 == 0 && i != 0)
+			fprintf(fp, "-------------------\n");
 		for (int j = 0; j < 9; j++)
 		{
 			if (j % 3 == 0)
-				cout << '|';
-			cout << this->grid[i][j];
+				fprintf(fp, "|");
+			fprintf(fp, "%d", 7);
 			if (j % 3 != 2)
-				cout << ' ';
+				fprintf(fp, " ");
 		}
-		cout << '|' << endl;
+		fprintf(fp, "|\n");
+	}
+	fclose(fp);
+}
+
+void Sudoku::printPuzzle()
+{
+	FILE* fp = NULL;
+	fp = fopen("./Q.txt", "w+");
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			fprintf(fp, "%d", 7);
+			if (j != 8)
+				fprintf(fp, " ");
+		}
+		fprintf(fp, "\n");
+	}
+	fclose(fp);
+}
+
+void Sudoku::readPuzzle()
+{
+	ifstream infile;
+	infile.open("Q.txt", ios::in);
+	char c;
+	int grid[9][9];
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9;)
+		{
+			c = infile.get();
+			if (c != ' ' && c != '\n')
+			{
+				int tmp = c - '0';
+				this->grid[i][j] = tmp;
+				j++;
+			}
+		}
 	}
 }

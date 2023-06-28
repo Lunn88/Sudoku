@@ -19,8 +19,10 @@ public:
 	pair<int, int> FindUnassignedLocation();
 	bool IsSafe(int row, int col, int num);
 	void create();
-	void printGrid();
 	bool solveGrid();
 	void countSln(int& number);
 	void genPuzzle();
+	void printSolution();
+	void printPuzzle();
+	void readPuzzle();
 };
