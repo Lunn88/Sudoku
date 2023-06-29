@@ -27,5 +27,5 @@ public:
 	void genPuzzle();
 	void printFormattedGrid(FILE* fp);
 	void printFormattedSolnGrid(FILE* fp);
-	bool readPuzzle(ifstream &infile);
+	void readPuzzle(ifstream &infile);
 };

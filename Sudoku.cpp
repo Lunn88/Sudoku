@@ -214,7 +214,7 @@ void Sudoku::printFormattedSolnGrid(FILE* fp)
 	fprintf(fp, "-\n");
 }
 
-bool Sudoku::readPuzzle(ifstream &infile)
+void Sudoku::readPuzzle(ifstream &infile)
 {
 	char c;
 	for (int i = 0; i < 9; i++)
@@ -236,5 +236,4 @@ bool Sudoku::readPuzzle(ifstream &infile)
 			
 		}
 	}
-	return true;
 }
