@@ -1,18 +1,2 @@
-﻿  Sudoku.cpp
-D:\Visual Studio 2022 project\shudo\Sudoku.cpp(32,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Visual Studio IDE\VC\Tools\MSVC\14.34.31933\include\algorithm(4940,64): warning C4244: 'argument': conversion from '_Diff' to 'int', possible loss of data
-D:\Visual Studio IDE\VC\Tools\MSVC\14.34.31933\include\algorithm(5016,69): message : see reference to function template instantiation 'void std::_Random_shuffle1<_RanIt,int(int)>(_RanIt,_RanIt,_RngFn (__cdecl &))' being compiled
-          with
-          [
-              _RanIt=int *,
-              _RngFn=int (int)
-          ]
-D:\Visual Studio 2022 project\shudo\Sudoku.cpp(23,64): message : see reference to function template instantiation 'void std::random_shuffle<int*,int(__cdecl &)(int)>(_RanIt,_RanIt,_RngFn)' being compiled
-          with
-          [
-              _RanIt=int *,
-              _RngFn=int (__cdecl &)(int)
-          ]
-  main.cpp
-  Generating Code...
-  Sudoku.vcxproj -> D:\Visual Studio 2022 project\shudo\x64\Debug\Sudoku.exe
+﻿  main.cpp
+  Sudoku.vcxproj -> D:\Visual Studio 2022 project\Sudoku\x64\Debug\Sudoku.exe

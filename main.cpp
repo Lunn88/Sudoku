@@ -21,14 +21,16 @@ int main(int argc, char** argv) {
 		ifstream infile;
 		infile.open(path, ios::in);
 
-		//解数独
-		sudoku.readPuzzle(infile);
-		infile.get(); infile.get(); infile.get();
-		
 		FILE* fp;
 		fp = fopen("./sudoku.txt", "w+");
-		sudoku.printFormattedGrid(fp);
-
+		while (infile.peek() != EOF)
+		{
+			sudoku.readPuzzle(infile);
+			infile.get(); infile.get(); infile.get(); infile.get();
+			sudoku.solveGrid();
+			sudoku.printFormattedGrid(fp);
+		}
+		fclose(fp);
 	}
 
 	else if (strcmp(argv[1], "-n") == 0) {
@@ -37,7 +39,7 @@ int main(int argc, char** argv) {
 		fp = fopen("./game.txt", "w+");
 		while (num > 0) {
 			sudoku.create();
-			//从this.grid中挖空
+			sudoku.genPuzzleWithNum(30);
 			sudoku.printFormattedGrid(fp);
 			num--;
 		}

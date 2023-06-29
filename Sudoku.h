@@ -24,7 +24,9 @@ public:
 	void create();
 	bool solveGrid();
 	void countSln(int& number);
-	void genPuzzle();
+	void genUniquePuzzle();
+	void genPuzzleWithDifficulty(int dif);
+	void genPuzzleWithNum(int num);
 	void printFormattedGrid(FILE* fp);
 	void printFormattedSolnGrid(FILE* fp);
 	void readPuzzle(ifstream &infile);

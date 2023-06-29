@@ -157,7 +157,7 @@ void Sudoku::countSln(int& number)
 	}
 }
 
-void Sudoku::genPuzzle()
+void Sudoku::genUniquePuzzle()
 {
 	for (int i = 0; i < 81; i++)
 	{
@@ -176,6 +176,22 @@ void Sudoku::genPuzzle()
 	}
 }
 
+void Sudoku::genPuzzleWithNum(int num)
+{
+	for (int i = 0; i < num; i++)
+	{
+		int x = (this->gridPos[i]) / 9;
+		int y = (this->gridPos[i]) % 9;
+		this->grid[x][y] = UNASSIGNED;
+	}
+}
+
+void Sudoku::genPuzzleWithDifficulty(int dif)
+{
+	int r = rand() % 10;
+	this->genPuzzleWithNum(10 + dif * 10 + r);
+}
+
 void Sudoku::printFormattedGrid(FILE* fp)
 {
 	for (int i = 0; i < 9; i++)
@@ -186,7 +202,12 @@ void Sudoku::printFormattedGrid(FILE* fp)
 		{
 			if (j % 3 == 0)
 				fprintf(fp, "|");
-			fprintf(fp, "%d", this->grid[i][j]);
+
+			if (this->grid[i][j] != 0)
+				fprintf(fp, "%d", this->grid[i][j]);
+			else
+				fprintf(fp, "$");
+			
 			if (j % 3 != 2)
 				fprintf(fp, " ");
 		}
