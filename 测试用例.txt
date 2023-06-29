@@ -1,0 +1,16 @@
+Sudoku.exe -c 100
+Sudoku.exe -c 1000001
+Sudoku.exe -c 0
+Sudoku.exe -s game.txt
+Sudoku.exe -n 100
+Sudoku.exe -n 10001
+Sudoku.exe -n 0
+Sudoku.exe -n 20 -m 2
+Sudoku.exe -n 20 -m 4
+Sudoku.exe -m 2
+Sudoku.exe -n 20 -r 20~55
+Sudoku.exe -n 20 -r 10~60
+Sudoku.exe -r 20~50
+Sudoku.exe -n 20 -u
+Sudoku.exe -u
+Sudoku.exe -t

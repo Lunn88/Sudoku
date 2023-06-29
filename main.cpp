@@ -5,6 +5,10 @@ int main(int argc, char** argv) {
 
 	if (strcmp(argv[1], "-c") == 0) {
 		int num = atoi(argv[2]);
+		if (num < 1 || num>1000000) {
+			cout << "You are allowed to create at least 1 sudoku solution and at most 1000000 sudoku solutions!" << endl;
+			return 0;
+		}
 		FILE* fp;
 		fp = fopen("./solved.txt", "w+");
 		while (num > 0) {
@@ -34,8 +38,12 @@ int main(int argc, char** argv) {
 	}
 
 	else if (strcmp(argv[1], "-n") == 0) {
+		int num = atoi(argv[2]);
+		if (num < 1 || num>10000) {
+			cout << "You are allowed to create at least 1 sudoku puzzle and at most 10000 sudoku puzzles!" << endl;
+			return 0;
+		}
 		if (argc == 3) {
-			int num = atoi(argv[2]);
 			FILE* fp;
 			fp = fopen("./game.txt", "w+");
 			while (num > 0) {
@@ -48,7 +56,10 @@ int main(int argc, char** argv) {
 		}
 		else if (argc == 5 && strcmp(argv[3], "-m") == 0) {
 			int dif = atoi(argv[4]);
-			int num = atoi(argv[2]);
+			if (dif < 1 || dif>3) {
+				cout << "You can only choose difficulty from 1 to 3!" << endl;
+				return 0;
+			}
 			FILE* fp;
 			fp = fopen("./game.txt", "w+");
 			while (num > 0) {
@@ -68,8 +79,11 @@ int main(int argc, char** argv) {
 			end[1] = argv[4][4];
 			int rbegin = atoi(begin);
 			int rend = atoi(end);
+			if (rbegin < 20 || rend>55) {
+				cout << "You can only choose blank number from 20 to 55!" << endl;
+				return 0;
+			}
 
-			int num = atoi(argv[2]);
 			FILE* fp;
 			fp = fopen("./game.txt", "w+");
 			while (num > 0) {
@@ -80,8 +94,6 @@ int main(int argc, char** argv) {
 				num--;
 			}
 			fclose(fp);
-			
-
 		}
 		else if (argc == 4 && strcmp(argv[3], "-u") == 0) {
 			int num = atoi(argv[2]);

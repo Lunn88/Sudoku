@@ -15,7 +15,6 @@ private:
 	int solnGrid[9][9];
 	int guessNum[9];
 	int gridPos[81];
-	int difficulty;
 
 public:
 	Sudoku();
