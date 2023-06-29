@@ -95,6 +95,10 @@ int main(int argc, char** argv) {
 			}
 			fclose(fp);
 		}
+		else {
+			cout << "Arguments ERROR!" << endl;
+			return 0;
+		}
 		
 	}
 	else {
