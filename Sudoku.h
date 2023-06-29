@@ -1,7 +1,10 @@
 #pragma once
+#pragma warning(disable:4996)
 #include <iostream>
+#include <fstream>
 
 #define UNASSIGNED 0
+
 
 using namespace std;
 
@@ -21,10 +24,8 @@ public:
 	void create();
 	bool solveGrid();
 	void countSln(int& number);
-	void genUniquePuzzle();
-	void genPuzzleWithDifficulty(int dif);
-	void genPuzzleWithNum(int num);
-	void printSolution();
-	void printPuzzle();
-	void readPuzzle();
+	void genPuzzle();
+	void printFormattedGrid(FILE* fp);
+	void printFormattedSolnGrid(FILE* fp);
+	bool readPuzzle(ifstream &infile);
 };

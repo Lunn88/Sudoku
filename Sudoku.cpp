@@ -157,7 +157,7 @@ void Sudoku::countSln(int& number)
 	}
 }
 
-void Sudoku::genUniquePuzzle()
+void Sudoku::genPuzzle()
 {
 	for (int i = 0; i < 81; i++)
 	{
@@ -176,26 +176,8 @@ void Sudoku::genUniquePuzzle()
 	}
 }
 
-void Sudoku::genPuzzleWithNum(int num)
+void Sudoku::printFormattedGrid(FILE* fp)
 {
-	for (int i = 0; i < num; i++)
-	{
-		int x = (this->gridPos[i]) / 9;
-		int y = (this->gridPos[i]) % 9;
-		this->grid[x][y] = UNASSIGNED;
-	}
-}
-
-void Sudoku::genPuzzleWithDifficulty(int dif)
-{
-	int r = rand() % 10;
-	this->genPuzzleWithNum(10 + dif * 10 + r);
-}
-
-void Sudoku::printSolution()
-{
-	FILE* fp = NULL;
-	fp = fopen("./sudoku.txt", "w+");
 	for (int i = 0; i < 9; i++)
 	{
 		if (i % 3 == 0 && i != 0)
@@ -210,43 +192,39 @@ void Sudoku::printSolution()
 		}
 		fprintf(fp, "|\n");
 	}
-	fclose(fp);
+	fprintf(fp, "-\n");
 }
 
-void Sudoku::printPuzzle()
+void Sudoku::printFormattedSolnGrid(FILE* fp)
 {
-	FILE* fp = NULL;
-	fp = fopen("./Q.txt", "w+");
 	for (int i = 0; i < 9; i++)
 	{
+		if (i % 3 == 0 && i != 0)
+			fprintf(fp, "-------------------\n");
 		for (int j = 0; j < 9; j++)
 		{
-			if(this->grid[i][j] == 0)
-				fprintf(fp, "$");
-			else
-				fprintf(fp, "%d", this->grid[i][j]);
-			if (j != 8)
+			if (j % 3 == 0)
+				fprintf(fp, "|");
+			fprintf(fp, "%d", this->solnGrid[i][j]);
+			if (j % 3 != 2)
 				fprintf(fp, " ");
 		}
-		fprintf(fp, "\n");
+		fprintf(fp, "|\n");
 	}
-	fclose(fp);
+	fprintf(fp, "-\n");
 }
 
-void Sudoku::readPuzzle()
+bool Sudoku::readPuzzle(ifstream &infile)
 {
-	ifstream infile;
-	infile.open("Q.txt", ios::in);
 	char c;
-	int grid[9][9];
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9;)
 		{
 			c = infile.get();
-			if (c != ' ' && c != '\n')
+			if (c != ' ' && c != '\n' && c != '|' && c != '-')
 			{
-				if (c == '$')
+				if (c != '$')
 				{
 					int tmp = c - '0';
 					this->grid[i][j] = tmp;
@@ -255,6 +233,8 @@ void Sudoku::readPuzzle()
 					this->grid[i][j] = 0;
 				j++;
 			}
+			
 		}
 	}
+	return true;
 }

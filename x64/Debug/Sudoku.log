@@ -1,4 +1,2 @@
-﻿  Sudoku.cpp
-D:\Visual Studio 2022 project\Sudoku\Sudoku.cpp(5,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Visual Studio 2022 project\Sudoku\Sudoku.cpp(59,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Sudoku.vcxproj -> D:\Visual Studio 2022 project\Sudoku\x64\Debug\Sudoku.exe
+﻿  main.cpp
+  Sudoku.vcxproj -> D:\Visual Studio 2022 project\shudo\x64\Debug\Sudoku.exe
