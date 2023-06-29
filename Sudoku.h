@@ -21,7 +21,9 @@ public:
 	void create();
 	bool solveGrid();
 	void countSln(int& number);
-	void genPuzzle();
+	void genUniquePuzzle();
+	void genPuzzleWithDifficulty(int dif);
+	void genPuzzleWithNum(int num);
 	void printSolution();
 	void printPuzzle();
 	void readPuzzle();
